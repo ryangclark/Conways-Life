@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Cellular Automata – Ryan Clark</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <link rel="stylesheet" link href="./css/reset.css" />
+    <link rel="stylesheet" link href="./css/index.css" />
+    <link rel="stylesheet" link href="./css/grid.css" />
+    <link rel="stylesheet" link href="./css/cellularautomata.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Merriweather:400,700&text=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdeéfghijklmnopqrstuvwxyz0123456789.?-–%20%22%E2%80%99%2B%2F%24%c2%a9%40%21%26%2C%27%28%29%3A%E2%80%9Cpower%E2%80%9D"
+      rel="stylesheet"
+    />
+    <!-- "é©@!&,'" -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,700,800&text=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzé0123456789%20%c2%a9"
+      rel="stylesheet"
+    />
+
+    <script defer="defer" src="./javascript/cellularAutomata.js"></script>
+  </head>
+
+  <header class="grid-all">
+    <nav>
+      <a id="myname" class="header-link undecorate" href="#">
+        <span class="font-weight-thin">RYAN</span>﻿<span class="font-weight-bold">CLARK</span>
+      </a>
+      <div class="header-link no-display-alpha no-display-bravo"></div>
+
+      <a id="nav-projects" class="header-link undecorate" href="#projects" 
+        >Projects</a>
+
+      <a id="nav-contact" class="header-link undecorate" href="#contact"
+        >Contact</a>
+
+    </nav>
+  </header>
+
+  <body>
+
+    <section class="grid-main space-after" id="">
+      <h1 style="margin: 1rem 0; padding: 1rem 0;">Cellular Automata</h1>
+      
+      <div id="universe">
+        <noscript>JavaScript is required!</noscript>
+        <div class="cellular-automata-grid">
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell cell-alive"></div>
+          <div class="cell"></div><div class="cell"></div>
+
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell cell-alive"></div>
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell cell-alive"></div>
+          <div class="cell"></div><div class="cell"></div>
+
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div>
+        </div> 
+      </div>
+
+      <div class="controls">
+        <button onclick="console.log('starting'); startUniverse()">Start</button>
+        <button onclick="console.log('stopping'); stopUniverse()">Stop</button>
+      </div>
+        
+    </section>
+
+    <section class="grid-main space-after" id="">
+      <h2>About Cellular Automata</h2>
+    </section>
+
+    <footer class="grid-all">
+      <div class="grid-main">
+        <p>&copy; Copyright 2019</p>
+      </div>
+    </footer>
+  </body>
+</html>

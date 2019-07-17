@@ -1,0 +1,19 @@
+.cellular-automata-grid {
+	border: var(--border-style-main);
+	display: grid;
+	grid-template-columns: repeat(8, minmax(1rem, 2rem));
+	padding: 0.25em 0;
+}
+
+.cell {
+	background: rgba(0, 0, 0, 0.1);
+	border: var(--border-style-main);
+	font-size: 1rem;
+	height: 1.5em;
+	margin: 0.25em 0.5em;
+	width: 1.5em;
+}
+
+.cell-alive {
+	background: var(--shade-medium);
+}
