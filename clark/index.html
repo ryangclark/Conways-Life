@@ -45,54 +45,59 @@
 
   <body>
 
-    <section class="grid-main space-after" id="">
-      <h1 style="margin: 1rem 0; padding: 1rem 0;">Cellular Automata</h1>
+    <section class="space-after" id="ca-grid">
+      <h1 style="margin: 1rem 0; padding: 1rem 0; width: 100%;">Cellular Automata</h1>
       
-      <div id="universe">
-        <noscript>JavaScript is required!</noscript>
-        <div class="cellular-automata-grid">
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell cell-alive"></div>
-          <div class="cell"></div><div class="cell"></div>
+      <div class="ca-container">
+        <div id="universe">
+          <noscript>JavaScript is required!</noscript>
+          <div id="toolbar">
+            <h5 id="generation-counter">Generation: 0</h5>
+            <div id="controls">
+              <button id="startUniverse" onclick="startUniverse()">Start</button>
+              <button disabled id="stopUniverse" onclick="stopUniverse()">Stop</button>
+              <button id="randomizeUniverse" onclick="randomizeUniverse()">Randomize</button>
+              <button id="clearUniverse" onclick="clearUniverse()">Clear</button>
+            </div>
+          </div>
 
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell cell-alive"></div>
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell cell-alive"></div>
-          <div class="cell"></div><div class="cell"></div>
+          <div id="cellular-automata-grid"></div>
 
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
+        </div>
 
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
-          <div class="cell"></div><div class="cell"></div>
-        </div> 
+        <!-- <div id="grid-rules-container"> -->
+
+        <div id="rules">
+          <h5>Rules:</h5>
+          
+          <h6>Death</h6>
+          <p>Live cells will die due to:</p>
+          <ul>
+            <li>
+              <span class="font-weight-bold">Overpopulation:</span>
+              If the cell has four or more neighbors
+            </li>
+            <li>
+              <span class="font-weight-bold">Isolation:</span>
+              If the cell has one or fewer neighbors
+            </li>
+          </ul>
+
+          <h6>Birth</h6>
+          <p>Dead cells will spawn life due to:</p>
+          <ul>
+            <li>
+              <span class="font-weight-bold">Support:</span>
+              If the cell has exactly three neighbors
+            </li>
+          </ul>
+
+          <h6>Equilibrium</h6>
+          <p>In all other cases, cells will stay alive or stay dead</p>
       </div>
+    </div>
 
-      <div class="controls">
-        <button onclick="console.log('starting'); startUniverse()">Start</button>
-        <button onclick="console.log('stopping'); stopUniverse()">Stop</button>
-      </div>
+      
         
     </section>
 
