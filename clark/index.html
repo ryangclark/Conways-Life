@@ -105,12 +105,42 @@
     <section class="grid-main space-after" id="discussion">
       <h2>About Cellular Automata</h2>
       <p>
-        Though modern computers are possible only because of amazing complexities under the hood, they are quite simple when compared to biology. <span class="font-italic">Cellular Automata</span> are a way for computers to imitate the complexities of life using simple rules and a grid. Though still far from the real thing, the results are surprisingly rich.
+        Though modern computers are possible only because of amazing complexities under the hood, they are quite simple when compared to biology. <span class="font-italic">Cellular Automata</span> are a way for computers to imitate the complexities of life using simple rules and a grid. Though still far from the real thing, the results can be surprisingly rich.
       </p>
 
       <h3>Conway's Game of Life</h3>
       <p>
-        dd
+        Conway's Game of Life is one such <span class="font-italic">Cellular Automata</span>. According to the 1970 Scientific American article that first published the game, Conway wanted to create as "lifelike" a simulation as possible with the simplest possible rules. Those rules are listed above, and should feel familiar: we all die in the extremes of overpopulation or loneliness and thrive with the right level of support.
+      </p>
+
+      <h3>Turing Completeness</h3>
+      <h6>What is a Turing Machine?</h6>
+      <p>
+        A Turing Machine is named after British mathematician Alan Turing. It's a theoretical concept or model Turing created in the 1930s to explore the possibilities of computers – far before the advent of transistors that now power our hardware.
+      </p>
+      <p>A Turing Machine is capable of:</p>
+      <ul>
+        <li>
+          Reading information from and writing information to an infinitely long tape. Essentially, being able to read and write variables from storage or memory.
+        </li>
+        <li>
+          Execute conditional logic using that information as inputs. Essentially, running if-then-else statements – <span class="font-italic">If X</span>, do this; <span class="font-italic">otherwise</span>, do that.
+        </li>
+      </ul>
+      <p>
+        Modern computers technically aren't Turing Machines because they use RAM (random access memory), which isn't as restricted as the tape Turing described.
+      </p>
+      <h6>
+        Is Conway's Game of Life a Turing Machine?
+      </h6>
+      <p>
+        It can be!
+      </p>
+      <p>
+        You can store data in the grid by adding stable constructs into the grid (a 2x2 square won't change from generation to generation). You can also build a <a src="https://en.wikipedia.org/wiki/Gun_(cellular_automaton)">glider gun</a> in Conway's Game of life that will slowly move about the grid. Using that and other similar constructs, you can create logic that will interact with the saved data. With an infinitely large board (just like the infinitely long tape) and enough time, it's possible to compute anything using the Game of Life.
+      </p>
+      <p>
+        Not that you'd really want to. Try learning JavaScript instead.
       </p>
     </section>
 
