@@ -15,7 +15,7 @@
     <link rel="stylesheet" link href="./css/cellularautomata.css" />
 
     <link
-      href="https://fonts.googleapis.com/css?family=Merriweather:400,700&text=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdeéfghijklmnopqrstuvwxyz0123456789.?-–%20%22%E2%80%99%2B%2F%24%c2%a9%40%21%26%2C%27%28%29%3A%E2%80%9Cpower%E2%80%9D"
+      href="https://fonts.googleapis.com/css?family=Merriweather:400,700&text=ABCDEFGHIJKLMNOPQRSTUVWXYZaábcdeéfghijklmnopqrstuvwxyz0123456789.?-–%20%22%E2%80%99%2B%2F%24%c2%a9%40%21%26%2C%27%28%29%3A%E2%80%9Cpower%E2%80%9D"
       rel="stylesheet"
     />
     <!-- "é©@!&,'" -->
@@ -107,6 +107,9 @@
       <p>
         Though modern computers are possible only because of amazing complexities under the hood, they are quite simple when compared to biology. <span class="font-italic">Cellular Automata</span> are a way for computers to imitate the complexities of life using simple rules and a grid. Though still far from the real thing, the results can be surprisingly rich.
       </p>
+      <p>
+        Those rules govern how each cell in the grid changes over time. The simulation examines each cell, determines if it lives or dies, and thus creates the next iteration, or <span class="font-italic">generation</span>, of the grid.
+      </p>
 
       <h3>Conway's Game of Life</h3>
       <p>
@@ -140,9 +143,129 @@
         You can store data in the grid by adding stable constructs into the grid (a 2x2 square won't change from generation to generation). You can also build a <a src="https://en.wikipedia.org/wiki/Gun_(cellular_automaton)">glider gun</a> in Conway's Game of life that will slowly move about the grid. Using that and other similar constructs, you can create logic that will interact with the saved data. With an infinitely large board (just like the infinitely long tape) and enough time, it's possible to compute anything using the Game of Life.
       </p>
       <p>
-        Not that you'd really want to. Try learning JavaScript instead.
+        Not that you'd really want to. Try JavaScript instead.
       </p>
     </section>
+
+    <div class="grid-main">
+      <h2>Creating a <span class="font-italic">Game of Life</span></h2>
+    </div>
+
+    <div class="grid-main">
+      <h3>Creating the Grid</h3>
+      <p>
+        The grid is relatively simple, and uses a couple of tricks to make it responsive.
+      </p>
+      <p>
+        The cells are created using JavaScript to make it easy to change the dimensions of the grid (current is 50x50) while also adding the <code>click</code> events to each cell.
+      </p>
+      <p>
+        The grid is created using CSS Grid, which is a fantastic tool. The columns are created with a single line of CSS that divides the available space equally for each column: <code>grid-template-columns: repeat(50, 1fr);</code>.
+      </p>
+      <p>
+        CSS Grid makes it easy to dynamically assign the <code>width</code> of each cell. To make each cell a square, the <code>height</code> must equal the width. CSS doesn't have a simple way of creating an aspect ratio, but a simple hack works just fine. Set the height of each cell to <code>0</code> and create "fake" height by setting <code>padding-top</code> to <code>84%</code>. <span class="font-italic">Voilá!</span> dynamically-sized grid for any screen size.
+      </p>
+
+      <p>
+        A superior implementation would automatically change the grid dimensions on mobile – not just change the size of the cells to cram them into a smaller space. A tiny cell is terrible to tap with your fingers.
+      </p>
+    </div>
+
+    <div class="grid-main">
+      <h3>Creating the Algorithm</h3>
+      <h4>Finding Neighbors</h4>
+      <p>
+        The program stores the <code>cells</code> and their state in one-dimensional arrays – that is, they are listed in order within a single array. Other implementations might use two-dimensional arrays that mimic the grid by storing each row as its own array within a single, containing array.
+      </p>
+    </div>
+
+    <div
+      class="grid-narrow"
+      style="background: rgba(0,0,0,0.1);
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: space-around;
+              margin: 1rem 0;
+              padding: 1rem 1rem 1.5rem;"
+    >
+      <div>
+        <p>One-Dimensional</p>
+        <pre>
+[a, b, c, d, e, f, g, h,
+ i, j, k, l, m, n, o, p]
+
+        </pre>
+      </div>
+      <div>
+        <p>Two-Dimensional</p>
+        <pre>
+[[a, b, c, d],
+ [e, f, g, h],
+ [i, j, k, l],
+ [m, n, o, p]]</pre>
+      </div>
+    </div>
+
+    <div class="grid-main">
+      <p>
+        Finding a given cell's neighbors requires just a bit of looping. In Conway's Game of Life, each cell has eight neighbors. In the example above, cell <code>f</code>'s neighbors are <code>a, b, c, e, g, i, j, k</code>. Looping through to find neighbors is easiest using <code>x</code> and <code>y</code> coordinates. Converting to and from <code>x</code> and <code>y</code> coordinates from the one-dimensional array is simple:
+      </p>
+    </div>
+
+    <div class="grid-narrow" style="background: rgba(0,0,0,0.1); margin: 1rem 0; padding: 1rem;">
+      <pre>
+i = x + width * y;
+y = i / width; // where "/" is integer division
+x = i % width; // where "%" is modulo,
+                  or the remainder of i / width</pre>
+    </div>
+
+    <div class="grid-main">
+      <h4>Buffer Arrays</h4>
+      <p>
+        The algorithm uses two buffer arrays. The first array stores the current state of each cell, and the second stores the next generation as it is calculated. When the algorithm has calculated the next generation, it uses the next-generation buffer to know whether to add or remove the <code>cell-alive</code> class from each cell in the grid. CSS then styles each cell to show the state of each generation. Finally, the buffer arrays swap: the next generation becomes the current one, and the current one becomes the array the algorithm writes the next generation on.
+      </p>
+
+      <p>
+        Buffer arrays are great for applications with iterative states because they make efficient use of memory. Creating a new array for each generation requires allocating memory for each array and, eventually, garbage collection for the old arrays. By reusing the same two arrays and simply rewriting over each one in turn, the program can avoid those steps entirely.
+      </p>
+    </div>
+
+    <div class="grid-main">
+      <h3>Space and Time Analysis</h3>
+      <p>
+        The runtime complexity of the algorithm is <code>O(n)</code>. Using JavaScripts <code>performance.now()</code>, the average time to create the next generation of the 50x50 grid on my machine is 15ms. Not too shabby!
+      </p>
+      <p>
+        The program is designed to be memroy efficient by using a double buffer, as described in the section above, and is therefore a constant use of memory.
+      </p>
+    </div>
+    <div class="grid-main">
+      <h3>Faster?</h3>
+      <p>
+        Many people have implemented Conway's Game of Life throughout the decades, and some algorithms are quite advanced. While researching, I studied another algorithm called HashLife that performs remarkably well. In essence, it does the following to find a given generation very quickly:
+      </p>
+      <ul>
+        <li>
+          <span class="font-weight-bold">Bitmaps:</span>
+          The algorithm takes a given grid, like the 50x50 grid above, and divides it into sub-grids. It then divides that grid into sub-grids, all the way until it has a set of 2x2 grids. It then analyzes those subgrids to find the next generation.
+        </li>
+        <li>
+          <span class="font-weight-bold">Hashing:</span>
+          The algorithm then hashes the input grid and its resulting generation. Hashing allows the algorithm to store the results and to very efficiently look them up again when it comes across the same inputs. That way, it can "remember" recurring patterns instead of calculating them each and every time. As the algorithm builds the bitmaps back up to the large grid size, it can recognize large patterns easily.
+        </li>
+        <li>
+          <span class="font-weight-bold">Looking to the Future:</span>
+          I'm not entirely clear on the details here, but my understanding is the final innovation HashLife employs is to extend its forecast for some of the grids, sometimes far into the future. By doing so, it can find patterns and dramatically improve performance.
+        </li>
+      </ul>
+      <p>
+        For grids with repeating patterns, HashLife can find, say, the trillionth generation quite quickly. The algorithm takes more time to find the initial generations because it's working hard to create the hashed results and to forecast. But once it has the pattern understood, it will "explode" with performance as it only needs to look up the results instead of calculating them.
+      </p>
+      <p>
+        There's a danger here, though, if the grid doesn't have a pattern. In that case, the algorithm will perform as it does in the intial generations of a repetitious grid as it works hard to find a pattern that it can remember. Better to use a traditional algorithm in that case.
+      </p>
+    </div>
 
     <footer class="grid-all">
       <div class="grid-main">
