@@ -1,9 +1,6 @@
-// document.getElementById("universe").style.background = "blue";
-
 const buffer = {
 	alpha: new Array(64),
 	beta: new Array(64),
-	// current: cells // think of the actual `<div>`s as the current array
 	compareArrays: function compareBufferArrays() {
 		return this.alpha.length === this.beta.length && 
 				this.alpha.every((value, index) => value === this.beta[index])
@@ -19,77 +16,104 @@ const buffer = {
 		} else {
 			this.nextBuffer = 'alpha';
 		}
-		// console.log('buffer toggled. next:', this.nextBuffer)
 	}
 };
 
-let cells = document.getElementsByClassName('cell');
+// Grid Variables
+const grid = document.getElementById('cellular-automata-grid');
+const cellCount = 2500;
+const height = 50;
+const width = 50;
 
 let counter = 0;
-
-var universeInterval;
+let universeInterval;
 let universeRunning = false;
 
-// set up
-for (let i = 0; i < 64; i++) {
-	cells[i].addEventListener('click', event => {
+// Create Grid
+for (let i = 0; i < cellCount; i++) {
+	let cell = document.createElement('div');
+	cell.id = `cell-${i}`;
+	cell.classList.add('cell');
+	cell.addEventListener('click', event => {
 		if (!universeRunning) {
 			cells[i].classList.toggle('cell-alive');			
 		}
 	})
-	// cells[i].innerHTML = i;
+	grid.appendChild(cell);
+}
+
+let cells = document.getElementsByClassName('cell');
+
+
+function clearUniverse() {
+	for (let cell of cells) {
+		cell.classList.remove('cell-alive');
+	}
+}
+
+function randomizeUniverse() {
+	for (let cell of cells) {
+		let random = Math.floor(Math.random() * 2);
+		if (random) {
+			cell.classList.toggle('cell-alive');
+		}
+	}
 }
 
 function startUniverse() {
 	universeRunning = true;
-	universeInterval = setInterval(universe, 1000);
-	console.log('universeInterval', universeInterval);
+	universeInterval = setInterval(universe, 500);
+	// manage buttons
+	document.getElementById('clearUniverse').disabled = true;
+	document.getElementById('randomizeUniverse').disabled = true;
+	document.getElementById('startUniverse').disabled = true;
+	document.getElementById('stopUniverse').disabled = false;
 }
 
 function stopUniverse() {
 	universeRunning = false;
 	clearInterval(universeInterval);
-	console.log('stopUniverse');
+	// manage buttons
+	document.getElementById('clearUniverse').disabled = false;
+	document.getElementById('randomizeUniverse').disabled = false;
+	document.getElementById('startUniverse').disabled = false;
+	document.getElementById('stopUniverse').disabled = true;
 }
 
 function universe() {
-	console.log('universe running!', buffer.nextBuffer);
-	// while (counter < 10) { //universeRunning && counter < 10 && !buffer.compareArrays() 
+	// let t0 = performance.now();
 
-	for (let i = 0; i < 64; i++) {
+	for (let i = 0; i < cellCount; i++) {
 		let alive = cells[i].classList.contains('cell-alive');
 		
 		// get `x` and `y` coordinates from one-dimensional array
-		let x = i % 8; // = i % width
-		let y = Math.floor(i / 8); // = i / width
+		let x = i % width; // = i % width
+		let y = Math.floor(i / width); // = i / width
 
-		// count neighbors
+		/* –– Count Neighbors –– */
 		let neighbors = 0;
 
 	    for (let j = -1; j <= 1; j++) {
 	      for (let k = -1; k <= 1; k++) {
-	      	neighborIndex = (x + j) + 8 * (y + k); // i = x + width * y
-	      	if (i === 21) {
-	      		// console.log('index', i, x, y, 'neighborIndex', neighborIndex);
-	      	}
-	        if (0 <= neighborIndex && neighborIndex < 64 &&
+	      	neighborIndex = (x + j) + width * (y + k);
+
+	      	// if `neighborIndex` is a valid index
+	      	// and the corresponding cell is alive,
+	      	// add to tally
+	        if (0 <= neighborIndex && neighborIndex < cellCount &&
 	        	cells[neighborIndex].classList.contains('cell-alive')
 	        	) {
-	        	// console.group('neighbor up');
-	        	// console.log('index', i);
-	        	// console.log('neighborIndex', neighborIndex)
-	        	// console.groupEnd();
 	        	neighbors += 1
 	        }
 	      }
 	    }
 
-		// subtract 1 for self if alive
+		// subtract 1 for self, if alive
 		if (alive) {
 			neighbors -= 1;
 		}
 
-		// compare against rules
+		/* –– Compare Tally Against Rules */
 		if (alive && (neighbors <  2 || neighbors > 3)) {
 		    buffer.next[i] = false;
 		    // console.log('index', i, 'neighbors', neighbors);
@@ -100,8 +124,8 @@ function universe() {
 		}
 	}
 
-	// apply new styles to `cells`
-	for (let index = 0; index < 64; index++) {
+	/* –– Apply Results to `cells` –– */
+	for (let index = 0; index < cellCount; index++) {
 		if (buffer.next[index]) {
 			cells[index].classList.add('cell-alive');
 		} else {
@@ -109,15 +133,14 @@ function universe() {
 		}
 	}
 
-	// cells[0].classList.add('cell-alive');
-
 	buffer.toggle();
 	counter += 1;
-	console.log('count:', counter);
-	return;
+	document.getElementById('generation-counter')
+		.innerHTML = `Generation: ${counter}`
+	// let t1 = performance.now();
+	// console.log('count:', counter, 'time:', (t1 - t0));
 };
 
-// startUniverse();
 
 // array1.length === array2.length && array1.every((value, index) => value === array2[index])
 
