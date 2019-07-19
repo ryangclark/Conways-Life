@@ -67,6 +67,7 @@ function startUniverse() {
 	document.getElementById('clearUniverse').disabled = true;
 	document.getElementById('randomizeUniverse').disabled = true;
 	document.getElementById('startUniverse').disabled = true;
+	document.getElementById('stepUniverse').disabled = true;
 	document.getElementById('stopUniverse').disabled = false;
 }
 
@@ -77,6 +78,7 @@ function stopUniverse() {
 	document.getElementById('clearUniverse').disabled = false;
 	document.getElementById('randomizeUniverse').disabled = false;
 	document.getElementById('startUniverse').disabled = false;
+	document.getElementById('stepUniverse').disabled = false;
 	document.getElementById('stopUniverse').disabled = true;
 }
 
